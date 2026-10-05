@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Service;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Appointment extends Model
+{
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function service(): BelongsTo
+    {
+        return $this->belongsTo(Service::class);
+    }
+}
