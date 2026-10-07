@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\AppointmentAlreadyBookedException;
+use App\Exceptions\AppointmentAlreadyCancelledException;
 
 class AppointmentService
 {
@@ -15,7 +16,7 @@ class AppointmentService
                 ->where('appointment_date', $appointmentDate)
                 ->where('status', '!=', 'cancelled')
                 ->exists();
-                
+
             if ($exists) {
                 throw new AppointmentAlreadyBookedException();
             }
@@ -27,5 +28,13 @@ class AppointmentService
                 'status' => 'pending',
             ]);
         });
+    }
+    public function cancelAppointment(Appointment $appointment)
+    {
+        if ($appointment->status === 'cancelled'){
+                throw new AppointmentAlreadyCancelledException();
+            }
+            $appointment->update(['status' => 'cancelled']);
+            return $appointment;
     }
 }

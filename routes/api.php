@@ -19,3 +19,7 @@ Route::post('/services', [ServiceController::class, 'store'])->middleware(['auth
 Route::get('/services/{service}', [ServiceController::class, 'show']);
 
 Route::post('/appointments', [AppointmentController::class, 'store'])->middleware('auth:sanctum');
+Route::get('/appointments', [AppointmentController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/appointments/{appointment}', [AppointmentController::class, 'show'])->middleware('auth:sanctum');
+Route::patch('/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->middleware('auth:sanctum');
+
